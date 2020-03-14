@@ -58,13 +58,17 @@ Rails.application.routes.draw do
   resources :users do
     get :project
     post :upload
-    get :download
+    #get 'download' => 'users#download'
+    #get :download
     get :admin_download
     post :update_project
     get :make_admin
+    
   end
 
   resources :teams
+  get 'show_pref' => 'teams#show_pref'
+  get 'script/index' => 'script#index'
   post 'remove' => 'teams#remove'
   post 'add_user' => 'teams#add_user'
   post 'set_preference' => 'teams#set_preference'
@@ -84,6 +88,7 @@ Rails.application.routes.draw do
   get 'assign' => 'assignments#assign'
   get 'viewassign' => 'assignments#view'
   get 'download' => 'assignments#download'
+  get 'download2' => 'users#download'
 
   resources :preassignments
   get 'preassignment' => 'preassignments#show'

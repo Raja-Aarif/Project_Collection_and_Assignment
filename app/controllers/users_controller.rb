@@ -138,6 +138,53 @@ class UsersController < ApplicationController
         end
     end
 
+
+    def download
+        @assignments = []
+        assign = Assignment.all
+        i = 1
+        data = "S.NO,UIN, Name(LN.FN),Project, Team\n"
+
+        
+        user=User.all
+        user.each do |u|
+            print "here"
+            @fname = u.firstname
+            @lname = u.lastname
+            @uin=u.uin
+            res = Relationship.find_by_user_id(u.id)
+            @team_name= "Not Allocated"
+            @team_n=nil
+            @project_name= "Not Allocated"
+            if res!=nil
+                 @team_n= Team.find_by_id(res.team_id)
+                 a=Assignment.find_by_team_id(res.team_id)
+                 if a!=nil
+                     project_n=Project.find_by_id(a.project_id)
+                     @project_name= project_n.title if project_n!=nil
+
+                 end
+                if  @team_n!=nil
+                    @team_name= @team_n.name
+                end
+            end
+
+            
+    
+            @name=  u.lastname+ " . "+  u.firstname 
+            @sem=u.semester
+
+            data << i.to_s << "," << @uin.to_s.inspect <<  "," << @name.to_s.inspect << ',' << @project_name.to_s.inspect <<  ","  << @team_name.to_s.inspect << "\n"
+            i += 1
+            @team_n=nil
+            @project_id=nil
+
+        end
+        date = Time.now.strftime('%Y%m')
+        send_data data, filename: "user-assignment-#{date}.csv"
+        
+
+    end
     def admin_download
         admin_user
 
