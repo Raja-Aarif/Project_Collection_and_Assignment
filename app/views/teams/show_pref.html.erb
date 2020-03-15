@@ -1,0 +1,91 @@
+
+<h1> <%=  @team.name %> Preferences </h1>
+
+
+
+
+<div class="row">
+  <div class="col-md-10">
+    <table class="table">
+      <tr>
+        <th>Team Name</th>
+        <td><%= @team.name %></td>
+      </tr>
+
+      <% if !@project.nil? %>
+        <tr>
+          <th>Project Name</th>
+          <td><%= link_to @project.title, @project %></td>
+        </tr>
+      <% end %>
+      <tr>
+        <th>Project Preferences Filled?</th>
+        <td><%= @team.preferences_filled == true ? "Yes" : "No" %></td>
+      </tr>
+      <tr>
+        <th>Positive Preference Projects</th>
+        <td>
+          <ol>
+            <% if @pos_projects!=nil %>
+            <% @pos_projects.each do |p| %>
+              <li>
+
+                <%=  p.title %>
+
+              </li>
+            <% end %>
+            <% end %>
+
+          </ol>
+        </td>
+      </tr>
+      
+      
+            
+      <tr>
+        <th>Neutral Preference Projects</th>
+        <td>
+          <ol>
+            <% if @neutral_projects!=nil %>
+            <% @neutral_projects.each do |p| %>
+              <li>
+
+  
+                <%=  p.title %>
+
+              </li>
+            <% end %>
+            <% end %>
+
+          </ol>
+        </td>
+      </tr>
+
+      <tr>
+        <th>Negative  Preference Projects</th>
+        <td>
+          <ol>
+            <% if @neg_projects!=nil %>
+            <% @neg_projects.each do |p| %>
+              <li>
+                <%=  p.title %>
+              </li>
+            <% end %>
+            <% end %>
+
+          </ol>
+        </td>
+      </tr>
+      
+
+
+
+
+      
+      
+      
+      
+    </table>
+
+  </div>
+</div>

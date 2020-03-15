@@ -10,7 +10,7 @@
     <td><%= raw(@preferences[team.id]) %></td>
     <td class="options"><%= link_to "Edit", edit_team_path(team) %>| <%= link_to "Delete", team, method: :delete,
                                                                                 data: {confirm: "You sure?"} %></td>
-    <td><%= link_to "Project Preferences", :controller => :teams, :action => :show_pref %></td>
+    <td><%= link_to "Project Preferences", :controller => :teams, :action => :show_pref ,:id => team.id  %></td>
   
     
   <% end %>

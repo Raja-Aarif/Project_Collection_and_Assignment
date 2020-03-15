@@ -194,6 +194,8 @@ class TeamsController < ApplicationController
 
     def edit
         @team = Team.find(params[:id])
+        print @team
+        @projects = Project.all
     end
 
     def update
@@ -204,6 +206,38 @@ class TeamsController < ApplicationController
         else
             render 'edit'
         end
+    end
+    
+    def show_pref
+        @team = Team.find(params[:id])
+       
+        @projects = Project.where('approved = ?', true)
+        @pos_projects=[]
+        @neg_projects=[]
+        @neutral_projects=[]
+        @projects.each do |p|
+                @pref=Preference.find_by(team_id: @team.id, project_id: p.id)
+                if @pref
+                    if @pref.value==1
+                        @pos_projects << p
+                    elsif @pref.value==-1
+                        @neg_projects << p
+
+                    end
+                end
+                
+            end # end do
+            
+    @projects.each do |p|
+        
+                if ( not @pos_projects.include? p) and (not @neg_projects.include? p)
+                     @neutral_projects << p
+                end
+                
+            end # end do
+ 
+        
+
     end
 
     def destroy
