@@ -276,7 +276,9 @@ class ProjectsController < ApplicationController
 
         @owned = Own.find_by_project_id(params[:id])
         @owner = User.find_by_id(@owned.user_id) unless @owned.nil?
-        @created_user = true if current_user.id == @owner.id
+        if @owner
+            @created_user = true if current_user.id == @owner.id
+        end
 
         unless @assignment.nil?
 
