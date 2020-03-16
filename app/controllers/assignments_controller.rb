@@ -106,6 +106,49 @@ class AssignmentsController < ApplicationController
         flash[:success] = 'Assignment algorithm ran successfully, ' + numPos.to_s + ' teams got Positive preference, ' + numNeu.to_s + ' teams got Neutral preference, ' + numNeg.to_s + ' teams got Negative preference'
         redirect_to viewassign_path
     end
+    
+    def manualassign
+        @team_names = []
+        @project_names = []
+        Team.find_each do |team|
+            @team_names << team.name
+        end
+        Project.find_each do |project|
+            @project_names << project.title
+        end
+
+        @assignments = []
+        assign = Assignment.all
+        assign.each do |a|
+            @project = Project.find_by(id: a.project_id)
+            @team = Team.find_by(id: a.team_id)
+            hash = {project_id: @project.id, team_id: @team.id, project_title: @project.title, team_name: @team.name}
+            @assignments << hash
+        end
+    end
+    
+
+    
+    
+    def assign2
+        @team_names = []
+        @project_names = []
+        Team.find_each do |team|
+            @team_names << team.name
+        end
+        Project.find_each do |project|
+            @project_names << project.title
+        end
+
+        @assignments = []
+        assign = Assignment.all
+        assign.each do |a|
+            @project = Project.find_by(id: a.project_id)
+            @team = Team.find_by(id: a.team_id)
+            hash = {project_id: @project.id, team_id: @team.id, project_title: @project.title, team_name: @team.name}
+            @assignments << hash
+        end
+    end
 
     def view
         @team_names = []
@@ -151,7 +194,7 @@ class AssignmentsController < ApplicationController
         project_assigned = Assignment.find_by_project_id(project.id)
 
         if !team_assigned.nil? || !project_assigned.nil?
-            flash[:danger] = 'Team or Project was already assigned'
+            flash[:danger] = ' Sorry ,Team or Project was already assigned'
             redirect_to viewassign_path
             return
         end
@@ -161,5 +204,25 @@ class AssignmentsController < ApplicationController
         assignment.save
         flash[:success] = 'Successfully assigned project ' + params[:project_title].to_s + ' to team ' + params[:team_name].to_s
         redirect_to viewassign_path
+    end
+    
+    
+    def add2
+        team = Team.find_by_name(params[:team_name].to_s)
+        team_assigned = Assignment.find_by_team_id(team.id)
+        project = Project.find_by_title(params[:project_title].to_s)
+        project_assigned = Assignment.find_by_project_id(project.id)
+
+        if !team_assigned.nil? || !project_assigned.nil?
+            flash[:danger] = ' Sorry ,Team or Project was already assigned'
+            redirect_to manualassign_path
+            return
+        end
+        assignment = Assignment.new
+        assignment.team_id = Team.find_by_name(params[:team_name].to_s).id
+        assignment.project_id = Project.find_by_title(params[:project_title].to_s).id
+        assignment.save
+        flash[:success] = 'Successfully assigned project ' + params[:project_title].to_s + ' to team ' + params[:team_name].to_s
+        redirect_to manualassign_path
     end
 end

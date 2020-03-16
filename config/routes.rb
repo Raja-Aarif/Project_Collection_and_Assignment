@@ -89,6 +89,7 @@ Rails.application.routes.draw do
   get 'viewassign' => 'assignments#view'
   get 'download' => 'assignments#download'
   get 'download2' => 'users#download'
+  get 'manualassign' => 'assignments#manualassign'
 
   resources :preassignments
   get 'preassignment' => 'preassignments#show'
@@ -100,6 +101,7 @@ Rails.application.routes.draw do
   post 'delete' => 'assignments#delete'
   post 'add' => 'assignments#add'
   post 'clear_all_data' => 'assignments#clearall'
+  post 'add2' => 'assignments#add2'
 
   # get ":/users/no_team" => "users#no_team"
 
