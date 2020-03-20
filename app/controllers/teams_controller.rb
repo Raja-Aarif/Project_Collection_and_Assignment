@@ -21,6 +21,31 @@ class TeamsController < ApplicationController
             redirect_to current_user
         end
     end
+    
+    
+    def create
+        if current_user.teams.count != 0
+            flash[:danger] = 'You have already created one team'
+            redirect_to teams_path
+        elsif current_user.is_member_of.present?
+            flash[:danger] = 'You are already a member of a team'
+            redirect_to root_url
+        else
+            @team = Team.new(team_params)
+            @team.user_id = current_user.id
+            @team.code = ('a'..'z').to_a.shuffle.take(4).join
+
+            if @team.save
+
+                current_user.join_team(@team) unless current_user.admin?
+
+                flash[:success] = 'Team created successfully'
+                redirect_to @team
+            else
+                render 'new'
+            end
+        end
+    end
 
     def index
         if current_user.admin?
@@ -115,7 +140,31 @@ class TeamsController < ApplicationController
             @user_names = @user_names.sort_by(&:downcase)
         end
     end
+    
+    
+        
+    def rem_prev
+        @project = Project.find(params[:id])
+        @assignment = Assignment.find_by_project_id(@project.id)
 
+        @team = @assignment.nil? ? nil : Team.find(@assignment.team_id)
+        if !@assignment.nil?
+            @assignment.destroy
+        end
+        
+        if !@team.nil?
+            @members = @team.members
+            @members.each do |m|
+                
+                m.destroy
+            end
+            @team.destroy
+        end
+        flash[:success] = 'Successfully Deleted Previous Team and members permanently'
+        redirect_to projects_path
+        
+    end
+    
     def data_download;
     end
 
@@ -168,29 +217,6 @@ class TeamsController < ApplicationController
         end
     end
 
-    def create
-        if current_user.teams.count != 0
-            flash[:danger] = 'You have already created one team'
-            redirect_to teams_path
-        elsif current_user.is_member_of.present?
-            flash[:danger] = 'You are already a member of a team'
-            redirect_to root_url
-        else
-            @team = Team.new(team_params)
-            @team.user_id = current_user.id
-            @team.code = ('a'..'z').to_a.shuffle.take(4).join
-
-            if @team.save
-
-                current_user.join_team(@team) unless current_user.admin?
-
-                flash[:success] = 'Team created successfully'
-                redirect_to @team
-            else
-                render 'new'
-            end
-        end
-    end
 
     def edit
         @team = Team.find(params[:id])
@@ -248,6 +274,7 @@ class TeamsController < ApplicationController
         assignment = Assignment.find_by_team_id(params[:id])
 
         assignment.destroy unless assignment.nil?
+        
 
         flash[:success] = 'Team deleted'
         redirect_to teams_path
@@ -269,8 +296,10 @@ class TeamsController < ApplicationController
         redirect_to root_url unless @team.is_leader?(current_user) || current_user.admin?
     end
 
+
     def valid_viewer
         @team = Team.find(params[:id])
         redirect_to root_url unless current_user.is_member?(@team) || current_user.admin?
     end
 end
+

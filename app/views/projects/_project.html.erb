@@ -23,5 +23,7 @@
     <td> <%= link_to "Delete", project, method: :delete,
                      data: {confirm: "You sure?"} %></td>
     <td><%= time_ago_in_words(project.updated_at) %></td>
+    <td><%= link_to "Erase previously assigned team info",:controller => :teams, :action => :rem_prev, :id => project.id %></li>
+
   <% end %>
 </tr>
