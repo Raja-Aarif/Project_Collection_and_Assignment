@@ -68,10 +68,10 @@ Rails.application.routes.draw do
 
   resources :teams
   get 'show_pref' => 'teams#show_pref'
-  get 'script/index' => 'script#index'
   post 'remove' => 'teams#remove'
   post 'add_user' => 'teams#add_user'
   post 'set_preference' => 'teams#set_preference'
+  get 'rem_prev_teams' => 'teams#rem_prev'
 
   resources :teams do
     member do
