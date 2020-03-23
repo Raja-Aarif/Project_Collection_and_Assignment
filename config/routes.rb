@@ -63,6 +63,7 @@ Rails.application.routes.draw do
     get :admin_download
     post :update_project
     get :make_admin
+    get 'change_team' => 'relationships#change_team'
     
   end
 
@@ -82,6 +83,7 @@ Rails.application.routes.draw do
   resources :relationships, only: [:destroy]
   get 'jointeam' => 'relationships#new'
   post 'jointeam' => 'relationships#create'
+  post 'change_team2' => 'relationships#change_team2'
   delete 'leaveteam' => 'relationships#destroy'
 
   resources :preferences, only: [:create]

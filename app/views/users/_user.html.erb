@@ -9,7 +9,7 @@
 
 
     <% if @teams[user.id] != nil %>
-      <td><%= link_to @teams[user.id][:name], team_path(@teams[user.id]) %></td>
+      <td><%= link_to @teams[user.id][:name], team_path(@teams[user.id]) %>  <%= link_to 'Change Team', user_change_team_path(user)  %> </td>
 
     <% else %>
       <td>Unassigned</td>

@@ -35,6 +35,62 @@ class RelationshipsController < ApplicationController
             render 'new'
         end
     end
+    
+    def change_team2
+        @team = Team.find_by(name: params[:team_name])
+        @user = User.find_by(uin: params[:user_uin])
+
+        print @team.name
+       
+        @r=Relationship.find_by(user_id: @user.id)
+        if Relationship.find_by(user_id: @user.id, team_id: @team.id)
+            
+            flash[:warning] = 'You are already a member of this team'
+            redirect_to users_path
+            return
+        end
+        
+        
+        if Relationship.where(team_id: @team.id).count >= 6
+            flash[:danger] = 'Sorry, this team has already  6 members. Please try a different team '
+            redirect_to users_path
+            return
+        end
+
+        @r.team_id= @team.id
+        @r.save
+        redirect_to users_path
+        
+
+
+    end
+    
+    
+    def change_team
+        @team_names = []
+        @project_names = []
+        @curri_user = []
+        curr_user = User.find(params[:user_id])
+        @curri_user << curr_user.firstname+curr_user.lastname
+        @curri_uin = []
+
+        @curri_uin << curr_user.uin
+       
+        Team.find_each do |team|
+            @team_names << team.name
+        end
+        Project.find_each do |project|
+            @project_names << project.title
+        end
+
+
+    end
+    
+
+    
+    
+    
+    
 
     def destroy
         @r = Relationship.find_by(id: params[:id])
