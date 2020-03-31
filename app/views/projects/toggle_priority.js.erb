@@ -1,0 +1,4 @@
+<% linkvalue_priority = @project.priority ?  "Reset Priority" : "set Priority"  %>
+$("#toggle_switch_priority_<%= @project.id %>").html("<%= linkvalue_priority %>")
+$("#listitemproject_<%= @project.id %>").animate({backgroundColor: '#dff0d8'}, 500)
+$("#listitemproject_<%= @project.id %>").animate({backgroundColor: '#FFFFFF'}, 500)

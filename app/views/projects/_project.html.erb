@@ -24,6 +24,14 @@
                      data: {confirm: "You sure?"} %></td>
     <td><%= time_ago_in_words(project.updated_at) %></td>
     <td><%= link_to "Erase previously assigned team info",:controller => :teams, :action => :rem_prev, :id => project.id %></li>
+    <td>
+      <% linkvalue_priority = project.priority ? "Reset Priority" : "Set Priority" %><%= link_to linkvalue_priority, "#", :onclick => "$(\'#priority_edit_project_#{project.id}\').submit()", :id => "toggle_switch_priority_#{project.id}" %>
+      <%= form_for(project, url: toggle_priority_project_path(project), remote: true, namespace: 'priority') do |f| %>
+        <%= hidden_field_tag :id, project.id %>
+        <%= f.submit "Submit", :class => "hidden" %>
+      <% end %>
+    </td>
+    <td><%= project.priority %></td>
 
   <% end %>
 </tr>

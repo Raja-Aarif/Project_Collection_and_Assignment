@@ -38,6 +38,7 @@ Rails.application.routes.draw do
       get :approve, :unapprove
       patch :toggle
       patch :toggle_active
+      patch :toggle_priority
     end
 
     # get :legacy

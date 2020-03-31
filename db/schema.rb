@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190415060942) do
+ActiveRecord::Schema.define(version: 20200331052537) do
 
   create_table "assignments", force: :cascade do |t|
     t.integer "team_id"
@@ -78,6 +78,7 @@ ActiveRecord::Schema.define(version: 20190415060942) do
     t.text "pivotal_link"
     t.text "heroku_link"
     t.boolean "isactive", default: true
+    t.boolean "priority", default: false
   end
 
   create_table "relationships", force: :cascade do |t|

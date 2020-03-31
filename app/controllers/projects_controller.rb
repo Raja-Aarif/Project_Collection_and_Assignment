@@ -457,6 +457,16 @@ class ProjectsController < ApplicationController
             format.js
         end
     end
+    
+    def toggle_priority
+        @project = Project.find(params[:id])
+        @project.toggle(:priority)
+        @project.save
+        respond_to do |format|
+            format.html {redirect_to projects_url}
+            format.js
+        end
+    end
 
     def toggle_active
         @project = Project.find(params[:id])

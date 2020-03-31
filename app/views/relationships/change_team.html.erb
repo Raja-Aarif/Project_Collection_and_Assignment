@@ -1,0 +1,20 @@
+<% provide(:title, 'User Team Details') %>
+<h1>Change Team</h1>
+<div class="row">
+  <div class="col-md-10 col-md-offset-1">
+
+
+
+
+
+<%= form_tag({action: :change_team2}) do %>
+  <h4>Choose a Team from dropdown</h4>
+  <%= select_tag(:team_name, options_for_select(@team_names)) %>
+  <h4>User Name</h4>
+  <%= select_tag(:user_name, options_for_select(@curri_user)) %>
+  <h4>User UIN</h4>
+  <%= select_tag(:user_uin, options_for_select(@curri_uin)) %>
+  
+  <%= submit_tag("Submit Changes") %>
+
+<% end %>
