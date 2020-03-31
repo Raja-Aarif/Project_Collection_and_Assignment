@@ -22,7 +22,11 @@
         <th>Project Preferences Filled?</th>
         <td><%= @team.preferences_filled == true ? "Yes" : "No"  %></td>
       </tr>
+      
+
+
       <tr>
+      
         <th>Positive Preference Projects</th>
         <td>
           <ol>
@@ -46,6 +50,7 @@
         <th>Neutral Preference Projects</th>
         <td>
           <ol>
+
             <% if @neutral_projects!=nil %>
             <% @neutral_projects.each do |p| %>
               <li>

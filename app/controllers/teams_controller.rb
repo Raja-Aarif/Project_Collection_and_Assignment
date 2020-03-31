@@ -262,7 +262,10 @@ class TeamsController < ApplicationController
                 
             end # end do
  
+    if @team.preferences_filled == false
         
+        flash[:danger] = 'Team did not submit project preferences, the below are the default preferences. '
+    end
 
     end
 
