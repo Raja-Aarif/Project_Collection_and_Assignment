@@ -62,8 +62,11 @@ class AssignmentsController < ApplicationController
         (0..(teams.size - 1)).each do |i|
             (0..(projects.size - 1)).each do |j|
                 pref = Preference.find_by(team_id: teams[i].id, project_id: projects[j].id)
-                costMatrix[i][j] = if pref && (pref.value == 1)
+                costMatrix[i][j] = if pref && (pref.value == 1) && projects[j].priority
+                                       0.5
+                                   elsif pref && (pref.value == 1)
                                        1
+                                       
                                    elsif pref && (pref.value == -1)
                                        (2 * numTeams) + 1
                                    else
