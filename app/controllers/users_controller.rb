@@ -143,7 +143,7 @@ class UsersController < ApplicationController
         @assignments = []
         assign = Assignment.all
         i = 1
-        data = "S.NO,UIN, Name(LN.FN),Project, Team\n"
+        data = "S.NO,UIN,LastName,FirstName,Project, Team\n"
 
         
         user=User.all
@@ -174,7 +174,7 @@ class UsersController < ApplicationController
             @name=  u.lastname+ " . "+  u.firstname 
             @sem=u.semester
 
-            data << i.to_s << "," << @uin.to_s.inspect <<  "," << @name.to_s.inspect << ',' << @project_name.to_s.inspect <<  ","  << @team_name.to_s.inspect << "\n"
+            data << i.to_s << "," << @uin.to_s.inspect <<  "," << @fname.to_s.inspect << ',' << @lname.to_s.inspect << ','<< @project_name.to_s.inspect <<  ","  << @team_name.to_s.inspect << "\n"
             i += 1
             @team_n=nil
             @project_id=nil

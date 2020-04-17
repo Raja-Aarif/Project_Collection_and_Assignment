@@ -57,7 +57,8 @@ Given (/^a user$/) do |table|
   @user = User.create!(
     admin: false,
     email: data['Email'] || 'user1@test.com',
-    name: data['Name'] || 'TestUser',
+    firstname: data['Name'] || 'TestUser',
+    lastname: data['Name'] || 'TestUser',
     password: data['Password'] || 'password',
     uin: data['UIN'] || '111111111',
     year: data['Year'] || '2018',
@@ -71,7 +72,8 @@ Given (/^an admin$/) do |table|
   @user = User.create!(
     admin: true,
     email: data['Email'] || 'admin1@test.com',
-    name: data['Name'] || 'TestAdmin',
+    firstname: data['Name'] || 'TestAdmin',
+    lastname: data['Name'] || 'TestAdmin',
     password: data['Password'] || 'password',
     uin: data['UIN'] || '123123123',
     year: data['Year'] || '2018',
@@ -79,6 +81,8 @@ Given (/^an admin$/) do |table|
     course: data['Course'] || 'CSCE606'
   )
 end
+
+
 
 Given (/^there exists a project$/) do |table|
   data = table.rows_hash
@@ -98,7 +102,7 @@ end
 
 Given (/^there exists a team$/) do |table|
   data = table.rows_hash
-  @user = User.find_by_name(data['User']) if data['User']
+  @user = User.find_by_firstname(data['User']) if data['User']
   Team.create!(name: data['Name'] || 'TeamName',
                user_id: @user.id)
 end

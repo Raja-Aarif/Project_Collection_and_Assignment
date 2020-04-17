@@ -466,6 +466,7 @@ class ProjectsController < ApplicationController
             format.html {redirect_to projects_url}
             format.js
         end
+        
     end
 
     def toggle_active

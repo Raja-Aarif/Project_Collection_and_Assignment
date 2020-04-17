@@ -59,6 +59,7 @@ class RelationshipsController < ApplicationController
 
         @r.team_id= @team.id
         @r.save
+        flash[:success] = 'Successfully changed '+  @user.firstname+' ' + @user.lastname + ' team to ' +@team.name
         redirect_to users_path
         
 
