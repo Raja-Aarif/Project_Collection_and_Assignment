@@ -35,7 +35,8 @@ gem "rails-settings-cached"
 group :development, :test do
   #  gem 'quiet_assets'  # Deprecated
   gem 'byebug'
-  gem 'sqlite3'
+  #gem 'sqlite3'
+  gem 'pg', '~> 0.21'
   #  gem 'web-console'    # Moved to :development only
   gem 'spring'
 end
